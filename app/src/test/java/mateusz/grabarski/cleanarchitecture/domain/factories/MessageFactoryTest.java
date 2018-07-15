@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import mateusz.grabarski.cleanarchitecture.domain.models.Message;
 import mateusz.grabarski.cleanarchitecture.domain.models.exceptions.ValidationMessageException;
+import mateusz.grabarski.cleanarchitecture.domain.services.TimeProvider;
 import mateusz.grabarski.cleanarchitecture.domain.validators.MessageValidator;
 
 import static org.junit.Assert.*;
@@ -18,7 +19,7 @@ public class MessageFactoryTest {
     @Test
     public void givenMessageHaveCorrectContentAndPassingValidators() {
         // given
-        MessageFactory factory = new MessageFactory(givenPassingValidator());
+        MessageFactory factory = new MessageFactory(givenPassingValidator(), givenTimeProvider());
 
         // when
         Message message = factory.build(MESSAGE_CONTENT);
@@ -30,7 +31,7 @@ public class MessageFactoryTest {
     @Test(expected = ValidationMessageException.class)
     public void givenMessageHaveIncorrectMessageAndNotPassingValidatorShouldThrowException() {
         // given
-        MessageFactory factory = new MessageFactory(givenNotPassingValidator());
+        MessageFactory factory = new MessageFactory(givenNotPassingValidator(), givenTimeProvider());
 
         // when
         Message message = factory.build(MESSAGE_CONTENT);
@@ -44,5 +45,9 @@ public class MessageFactoryTest {
 
     private MessageValidator givenPassingValidator() {
         return mock(MessageValidator.class);
+    }
+
+    private TimeProvider givenTimeProvider() {
+        return mock(TimeProvider.class);
     }
 }

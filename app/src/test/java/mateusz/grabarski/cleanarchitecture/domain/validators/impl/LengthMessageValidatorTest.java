@@ -8,7 +8,11 @@ import java.util.Date;
 
 import mateusz.grabarski.cleanarchitecture.domain.models.Message;
 import mateusz.grabarski.cleanarchitecture.domain.models.exceptions.ValidationMessageException;
+import mateusz.grabarski.cleanarchitecture.domain.services.TimeProvider;
 import mateusz.grabarski.cleanarchitecture.domain.validators.MessageValidator;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class LengthMessageValidatorTest {
 
@@ -22,7 +26,7 @@ public class LengthMessageValidatorTest {
     @Test
     public void messageCreatedBefore18WithMessageContentLessThen140ChartsShouldBePositiveValidate() {
         // given
-        Message message = givenMessageWithLessThen140Charts(getCreateDate(16, 0));
+        Message message = givenMessageWithLessThen140Charts(givenTimeProviderWithDate(16, 0));
 
         // when
         mMessageValidator.verify(message);
@@ -31,7 +35,7 @@ public class LengthMessageValidatorTest {
     @Test(expected = ValidationMessageException.class)
     public void messageCreatedBefore18WithMessageContentMoreThen140ChartsShouldNotBePositiveValidateThrownException() {
         // given
-        Message message = givenMessageWithMoreThen140Charts(getCreateDate(16, 0));
+        Message message = givenMessageWithMoreThen140Charts(givenTimeProviderWithDate(16, 0));
 
         // when
         mMessageValidator.verify(message);
@@ -40,7 +44,7 @@ public class LengthMessageValidatorTest {
     @Test
     public void messageCreatedAfter18WithMessageContentLessThen140ChartShouldBePositiveValidate() {
         // given
-        Message message = givenMessageWithLessThen140Charts(getCreateDate(20, 0));
+        Message message = givenMessageWithLessThen140Charts(givenTimeProviderWithDate(20, 0));
 
         // when
         mMessageValidator.verify(message);
@@ -49,18 +53,24 @@ public class LengthMessageValidatorTest {
     @Test(expected = ValidationMessageException.class)
     public void messageCreatedBefore18WithMessageContentZeroLengthShouldNotPassThrowException() {
         // given
-        Message message = new Message("", getCreateDate(16, 0));
+        Message message = new Message("", givenTimeProviderWithDate(16, 0));
 
         // when
         mMessageValidator.verify(message);
     }
 
-    private Message givenMessageWithLessThen140Charts(Date createDate) {
-        return new Message(getStringWithLength(100), createDate);
+    private Message givenMessageWithLessThen140Charts(TimeProvider timeProvider) {
+        return new Message(getStringWithLength(100), timeProvider);
     }
 
-    private Message givenMessageWithMoreThen140Charts(Date createDate) {
-        return new Message(getStringWithLength(200), createDate);
+    private Message givenMessageWithMoreThen140Charts(TimeProvider timeProvider) {
+        return new Message(getStringWithLength(200), timeProvider);
+    }
+
+    private TimeProvider givenTimeProviderWithDate(int hour, int minute) {
+        TimeProvider timeProvider = mock(TimeProvider.class);
+        when(timeProvider.getDate()).thenReturn(getCreateDate(hour, minute));
+        return timeProvider;
     }
 
     private Date getCreateDate(int hour, int minute) {

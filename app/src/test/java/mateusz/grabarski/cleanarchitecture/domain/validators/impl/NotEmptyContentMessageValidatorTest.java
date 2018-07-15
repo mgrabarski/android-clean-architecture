@@ -3,11 +3,12 @@ package mateusz.grabarski.cleanarchitecture.domain.validators.impl;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Date;
-
 import mateusz.grabarski.cleanarchitecture.domain.models.Message;
 import mateusz.grabarski.cleanarchitecture.domain.models.exceptions.ValidationMessageException;
+import mateusz.grabarski.cleanarchitecture.domain.services.TimeProvider;
 import mateusz.grabarski.cleanarchitecture.domain.validators.MessageValidator;
+
+import static org.mockito.Mockito.mock;
 
 public class NotEmptyContentMessageValidatorTest {
 
@@ -37,10 +38,10 @@ public class NotEmptyContentMessageValidatorTest {
     }
 
     private Message givenNewMessageWithContent() {
-        return new Message("Message content", new Date());
+        return new Message("Message content", mock(TimeProvider.class));
     }
 
     private Message givenNewMessageWithNoContent() {
-        return new Message("", new Date());
+        return new Message("", mock(TimeProvider.class));
     }
 }
