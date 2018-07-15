@@ -1,15 +1,14 @@
-package mateusz.grabarski.cleanarchitecture.domain.models.validators.impl;
+package mateusz.grabarski.cleanarchitecture.domain.validators.impl;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import java.security.PublicKey;
 import java.util.Calendar;
 import java.util.Date;
 
 import mateusz.grabarski.cleanarchitecture.domain.models.Message;
 import mateusz.grabarski.cleanarchitecture.domain.models.exceptions.ValidationMessageException;
-import mateusz.grabarski.cleanarchitecture.domain.models.validators.MessageValidator;
+import mateusz.grabarski.cleanarchitecture.domain.validators.MessageValidator;
 
 public class LengthMessageValidatorTest {
 

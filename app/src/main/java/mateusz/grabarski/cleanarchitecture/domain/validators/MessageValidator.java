@@ -1,4 +1,4 @@
-package mateusz.grabarski.cleanarchitecture.domain.models.validators;
+package mateusz.grabarski.cleanarchitecture.domain.validators;
 
 import mateusz.grabarski.cleanarchitecture.domain.models.Message;
 
