@@ -2,6 +2,8 @@ package mateusz.grabarski.cleanarchitecture.domain.models;
 
 import org.junit.Test;
 
+import java.util.Date;
+
 import mateusz.grabarski.cleanarchitecture.domain.models.exceptions.IllegalMessageStateChange;
 
 import static org.junit.Assert.*;
@@ -80,6 +82,6 @@ public class MessageTest {
     }
 
     private Message giveNewMessage() {
-        return new Message(MESSAGE_CONTENT);
+        return new Message(MESSAGE_CONTENT, new Date());
     }
 }

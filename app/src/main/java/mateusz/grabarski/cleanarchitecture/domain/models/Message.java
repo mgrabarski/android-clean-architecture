@@ -8,11 +8,12 @@ import mateusz.grabarski.cleanarchitecture.domain.models.exceptions.IllegalMessa
 public class Message {
 
     private final String messageContent;
-    private final Date createDate = new Date();
+    private final Date createDate;
     private MessageState messageState = MessageState.PENDING;
 
-    public Message(String messageContent) {
+    public Message(String messageContent, Date createDate) {
         this.messageContent = messageContent;
+        this.createDate = createDate;
     }
 
     public boolean isPending() {
@@ -31,5 +32,13 @@ public class Message {
             throw new IllegalMessageStateChange("Only pending message can be cancel");
         }
         messageState = MessageState.CANCELLED;
+    }
+
+    public String getMessageContent() {
+        return messageContent;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
     }
 }
